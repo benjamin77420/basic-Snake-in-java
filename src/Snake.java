@@ -13,7 +13,7 @@ public class Snake{
 
     //constructor
     public Snake(){
-        this.numOfBlocks = 1;// starting with one block
+        this.numOfBlocks = 0;// number of blocks added to the head of te snake
         this.width = Consts.SNAKE_WIDTH;// will be altered for every candy the snake eat
         this.hight = Consts.SNAKE_HIGHT;// will keep this value
         this.X = Consts.START_X;//center screen
@@ -74,9 +74,7 @@ public class Snake{
         this.X -= Consts.CANDY_WIDTH;
     }
 
-    public void moveRight(){
-        this.X += Consts.CANDY_WIDTH;
-    }
+    public void moveRight(){ this.X += Consts.CANDY_WIDTH;}
 
     public void moveup(){
         this.Y -= Consts.CANDY_WIDTH;
