@@ -1,94 +1,100 @@
-import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Snake{
 
-    private int numOfBlocks;
-    private int width;
-    private int hight;
-
-    private int X;
-    private int Y;
-
     private Consts.Direction direction;
+    private List<BodyBlocks> bodyParts = new ArrayList<BodyBlocks>();
 
     //constructor
     public Snake(){
-        this.numOfBlocks = 0;// number of blocks added to the head of te snake
-        this.width = Consts.SNAKE_WIDTH;// will be altered for every candy the snake eat
-        this.hight = Consts.SNAKE_HIGHT;// will keep this value
-        this.X = Consts.START_X;//center screen
-        this.Y = Consts.START_Y;//center screen
         this.direction = Consts.Direction.STAND_STILL;// will not be in motion
-    }
-
-
-    // Region GETTERS && SETTERS
-
-    public void setNumOfBlocks(int numOfBlocks) {
-        this.numOfBlocks = numOfBlocks;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
+        this.bodyParts.add(new BodyBlocks(Consts.START_X, Consts.START_Y));//a block for the head
+        this.bodyParts.add(new BodyBlocks(Consts.START_X - Consts.UNIT_SIZE, Consts.START_Y));//a block for the head
     }
 
     public void setDirection(Consts.Direction newDirection){
         this.direction = newDirection;
     }
 
-    public void setY(int y) {
-        this.Y = y;
-    }
-
-    public void setX(int x) {
-        this.X = x;
-    }
-
-    public int getNumOfBlocks() {
-        return this.numOfBlocks;
-    }
-
-    public int getX() {
-        return this.X;
-    }
-
-    public int getY() {
-        return Y;
-    }
-
-    public int getWidth() { return this.width;}
-
-    public int getHight() {
-        return this.hight;
-    }
-
     public Consts.Direction getDirection(){
         return this.direction;
     }
+
+    public List<BodyBlocks> getBodyParts() { return this.bodyParts; }
 
     //End Region
 
     // Region movment fucntions
 
-    public void moveLeft(){
-        this.X -= Consts.CANDY_WIDTH;
-    }
+    public void moveLeft(){ this.bodyParts.get(0).setX(this.bodyParts.get(0).getX() - Consts.UNIT_SIZE); }
 
-    public void moveRight(){ this.X += Consts.CANDY_WIDTH;}
+    public void moveRight(){ this.bodyParts.get(0).setX(this.bodyParts.get(0).getX() + Consts.UNIT_SIZE); }
 
     public void moveup(){
-        this.Y -= Consts.CANDY_WIDTH;
+        this.bodyParts.get(0).setY(this.bodyParts.get(0).getY() - Consts.UNIT_SIZE);
     }
 
     public void moveDown(){
-        this.Y += Consts.CANDY_WIDTH;
+        this.bodyParts.get(0).setY(this.bodyParts.get(0).getY() + Consts.UNIT_SIZE);
     }
 
     //ENd Region
 
-    public void growBigger(){
-        this.numOfBlocks++;
+    //border control
+    public void checkBorders(){
+        for(BodyBlocks block : this.bodyParts){
+            if(block.getX() < 0 ) block.setX(Consts.WINDOW_WIDTH);
+            else if(block.getX() > Consts.WINDOW_WIDTH) block.setX(0);
+            if(block.getY() < 0) block.setY(Consts.WINDOW_HIGHT);
+            else if(block.getY() > Consts.WINDOW_HIGHT) block.setY(Consts.WINDOW_UPPER_PANEL);
+        }
     }
 
+    public boolean eatCandy(Candy currCandy){
+        boolean yummy = false;
 
+        Rectangle head = new Rectangle(this.bodyParts.get(0).getX(), this.bodyParts.get(0).getY(), Consts.UNIT_SIZE, Consts.UNIT_SIZE);
+        Rectangle candyRec = new Rectangle(currCandy.getX(), currCandy.getY(), Consts.UNIT_SIZE, Consts.UNIT_SIZE);
+
+        if(head.intersects(candyRec)) {
+            addBodyPart();
+            yummy = true;
+        }
+
+        return yummy;
+    }
+
+    public void addBodyPart(){
+        //add a new body part to the snake
+        this.bodyParts.add(this.bodyParts.size()-1,new BodyBlocks(this.bodyParts.get(this.bodyParts.size()-1).getX(), this.bodyParts.get(this.bodyParts.size()-1).getY()));
+    }
+
+    public void paintSnake(Graphics graphics){
+        graphics.setColor(Color.green);
+        int i=0;
+        for(BodyBlocks block : this.bodyParts){
+            graphics.fillRect(block.getX(), block.getY(), block.getUnitSize(), block.getUnitSize());
+            System.out.println("this is block index " + i++ + " X: " + block.getX() + " Y: " + block.getY());
+        }
+    }
+    public void recalibrate() {
+        //matching all the X,Y of the elements to the element behind them to make the illusion if a snake moving
+        for (int i = this.bodyParts.size() - 1; i >= 1; i--) {
+            this.bodyParts.get(i).setX(this.bodyParts.get(i - 1).getX());
+            this.bodyParts.get(i).setY(this.bodyParts.get(i - 1).getY());
+        }
+    }
+
+    public boolean biteMySelf(){
+        Rectangle head = new Rectangle(this.bodyParts.get(0).getX(), this.bodyParts.get(0).getY(), Consts.UNIT_SIZE, Consts.UNIT_SIZE);
+
+        for(int i=2; i<this.bodyParts.size()-1; i++){
+            Rectangle bodyBlock = new Rectangle(this.bodyParts.get(i).getX(), this.bodyParts.get(i).getY(), Consts.UNIT_SIZE, Consts.UNIT_SIZE);
+            if(head.intersects(bodyBlock))
+                return false;
+        }
+        return true;
+    }
 }

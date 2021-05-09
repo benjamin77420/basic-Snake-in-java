@@ -1,37 +1,12 @@
-public class BodyBlocks {
+import java.awt.*;
 
-    private int X;
-    private int Y;
-
-    private int width = Consts.SNAKE_WIDTH;
-    private int hight = Consts.SNAKE_HIGHT;
-
-    public BodyBlocks(int x, int y){
-        this.X = x;
-        this.Y = y;
+public class BodyBlocks extends Unit{
+    public BodyBlocks(int x, int y) {
+        super(x, y, Consts.UNIT_SIZE);
     }
 
-    public int getX() {
-        return this.X;
-    }
-
-    public void setX(int x) {
-        this.X = x;
-    }
-
-    public int getY() {
-        return this.Y;
-    }
-
-    public void setY(int y) {
-        this.Y = y;
-    }
-
-    public int getWidth() {
-        return this.width;
-    }
-
-    public int getHight() {
-        return this.hight;
+    public void paint(Graphics graphics){
+        graphics.setColor(Color.green);
+        graphics.fillRect(this.getX(), this.getY(), this.getUnitSize(), this.getUnitSize());
     }
 }

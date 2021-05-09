@@ -2,23 +2,18 @@ public class Consts {
     //window measurements
     public static final int WINDOW_WIDTH = 800;
     public static final int WINDOW_HIGHT = 400;
-    public static final int WINDOW_BORDER = 2;
+    public static final int WINDOW_UPPER_PANEL = 20;
 
     //starting point will be in the center of the screen
     public static final int START_X = WINDOW_WIDTH/2;
     public static final int START_Y = WINDOW_HIGHT/2;
 
 
-    //snake measurements
-    public static final int SNAKE_HIGHT = 20;
-    public static final int SNAKE_WIDTH = 20;
-
-    //candy measurements
-    public static final int CANDY_HIGHT = 20;
-    public static final int CANDY_WIDTH = 20;
+    //snake measurements && candy measurements
+    public static final int UNIT_SIZE = 20;
 
     //max game units
-    public static final int GAME_UNITS = (WINDOW_WIDTH * WINDOW_WIDTH)/CANDY_HIGHT;
+    public static final int GAME_UNITS = (WINDOW_WIDTH * WINDOW_WIDTH)/ UNIT_SIZE;
 
     //an enum that will represent the direction of the movment numerically
     public enum Direction {
