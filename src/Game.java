@@ -3,7 +3,6 @@ import java.awt.*;
 import java.util.Random;
 
 public class Game extends JFrame{
-    //TODO : need to add a function that will check if the snake has bit his own tail
 
     Random rand = new Random();
 
