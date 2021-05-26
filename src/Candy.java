@@ -14,8 +14,8 @@ public class Candy extends Unit {
         int validXCoordinate;
         // rerandom X and Y points on the game panel grid, the loop will do an other loop until the cordinates are valid
         do{
-            validYCoordinate = rand.nextInt((int)Consts.WINDOW_HIGHT/Consts.UNIT_SIZE) *Consts.UNIT_SIZE;
-            validXCoordinate = rand.nextInt((int)Consts.WINDOW_WIDTH/Consts.UNIT_SIZE) *Consts.UNIT_SIZE;
+            validYCoordinate = rand.nextInt(((int)Consts.WINDOW_HIGHT/Consts.UNIT_SIZE) *Consts.UNIT_SIZE);
+            validXCoordinate = rand.nextInt(((int)Consts.WINDOW_WIDTH/Consts.UNIT_SIZE) *Consts.UNIT_SIZE);
 
             if(validYCoordinate <= Consts.WINDOW_UPPER_PANEL)
                 continue;
