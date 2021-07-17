@@ -77,7 +77,7 @@ public class GameScene extends JPanel{
     public void paint(Graphics graphics){
         super.paint(graphics);
         graphics.setColor(Color.green);
-        int i=0;
+
         snake.paintSnake(graphics);
         candy.paintNewCandy(graphics);
         //call to checkBorders in case our snake will leave the game panel
